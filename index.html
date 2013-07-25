@@ -9,13 +9,23 @@
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('<button name="button" class="gettweets">Get New Tweets</button>');
+        $body.html(
+          '<title>Twittler</title>' +
+          '<style type="text/css">' +
+            'body {font-family: Georgia;}' +
+            'h1, h2 {font-family: Ariel;}' +
+            '#title {font-size: 225%;}' +
+            'h2 {text-decoration: underline;}' +
+          '</style>' + 
+          '<h1 id="title">Twittler!!!</h1>' +
+            '<button name="button" class="gettweets">Get New Tweets</button>' +
+          '<h2>tweets for you</h2>');
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ', ' + tweet.created_at);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + ', ' + tweet.created_at.toDateString() + ' ' + tweet.created_at.toLocaleTimeString());
           $tweet.appendTo($body);
           index -= 1;
         }
