@@ -11,16 +11,14 @@
         var $body = $('body');
         $body.html(
           '<title>Twittler</title>' +
-          '<style type="text/css">' +
-            'body {font-family: Georgia;}' +
-            'h1, h2 {font-family: Ariel;}' +
-            '#title {font-size: 225%;}' +
-            'h2 {text-decoration: underline;}' +
-          '</style>' + 
           '<h1 id="title">Twittler!!!</h1>' +
+          '<div id="Twittly"></div>' +
             '<button name="button" class="gettweets">Get New Tweets</button>' +
-          '<h2>tweets for you</h2>');
-
+          '<h2>Tweets For You</h2>');
+        $("h1","h2").css("font-family","\'Georgia\'");
+        $("h1").css("font-size",45);
+        $("h2").css("text-decoration","underline");
+        $('#Twittly').prepend('<img id="Twittly Bird" src = "/Users/cmitchell/Downloads/twittlerBird.jpg"</div>')
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
