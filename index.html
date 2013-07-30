@@ -3,22 +3,29 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <style type="text/css">
+      h1,h2 {
+        font-family: Georgia;
+      }
+      h1{
+        font-size: 45;
+      }
+      h2{
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
+    <title>Twittler</title>
+          <h1 id="title">Twittler!!!</h1>
+          <div id="Twittly"><img src="/Users/cmitchell/Downloads/twittlerBird.jpg"></div>
+          <button name="button" class="gettweets">Get New Tweets</button>
+          <h2>Tweets For You</h2>
     <script>
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html(
-          '<title>Twittler</title>' +
-          '<h1 id="title">Twittler!!!</h1>' +
-          '<div id="Twittly"></div>' +
-          '<button name="button" class="gettweets">Get New Tweets</button>' +
-          '<h2>Tweets For You</h2>');
-        $("h1","h2").css("font-family","\'Georgia\'");
-        $("h1").css("font-size",45);
-        $("h2").css("text-decoration","underline");
-        $('#Twittly').prepend('<img id="Twittly Bird" src = "/Users/cmitchell/Downloads/twittlerBird.jpg"</div>')
+        $body.html();
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
@@ -27,6 +34,7 @@
           $tweet.appendTo($body);
           index -= 1;
         }
+        // to make user name clickable, turn $tweet.text into html, wrap the username in it's own identifier, and build a jquery click function on it
         $("button.gettweets").click(function() {
           var index = streams.home.length - 1;
           while(index >= 0){
