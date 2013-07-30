@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Twittler</title>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <style type="text/css">
@@ -16,34 +17,30 @@
     </style>
   </head>
   <body>
-    <title>Twittler</title>
-          <h1 id="title">Twittler!!!</h1>
-          <div id="Twittly"><img src="/Users/cmitchell/Downloads/twittlerBird.jpg"></div>
-          <button name="button" class="gettweets">Get New Tweets</button>
-          <h2>Tweets For You</h2>
+    <h1 id="pagetitle">Twittler!!!</h1>
+    <div id="Twittly"><img src="/Users/cmitchell/Downloads/twittlerBird.jpg"></div>
+    <button name="button" class="gettweets">Get New Tweets</button>
+    <h2>Tweets For You</h2>
     <script>
-
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html();
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ', ' + tweet.created_at.toDateString() + ' ' + tweet.created_at.toLocaleTimeString());
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-        // to make user name clickable, turn $tweet.text into html, wrap the username in it's own identifier, and build a jquery click function on it
-        $("button.gettweets").click(function() {
+      window.newTweets = function(){
+          var $body = $('body');
+          $body.html();
           var index = streams.home.length - 1;
           while(index >= 0){
             var tweet = streams.home[index];
-            var $tweet = $('<div></div>');
+            var $tweet = $('<div class="tweet"></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message + ', ' + tweet.created_at.toDateString() + ' ' + tweet.created_at.toLocaleTimeString());
             $tweet.appendTo($body);
             index -= 1;
           }
+        }
+      $(document).ready(function(){
+        newTweets();
+        // to make user name clickable, turn $tweet.text into html, wrap the username in it's own identifier, and build a jquery click function on it
+
+        $("button.gettweets").click(function() {
+          $(".tweet").text('');
+          newTweets();
         });
 
       });
