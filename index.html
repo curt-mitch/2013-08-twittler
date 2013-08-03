@@ -11,39 +11,65 @@
       h1{
         font-size: 45;
       }
-      h2{
+      h2,h3,.username{
         text-decoration: underline;
+      }
+      .username{
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
     <h1 id="pagetitle">Twittler!!!</h1>
     <div id="Twittly"><img src="/Users/cmitchell/Downloads/twittlerBird.jpg"></div>
-    <button name="button" class="gettweets">Get New Tweets</button>
+    <h3>User-Specific Tweets</h3>
+    <div class="username"></div>
+    <ol class="tweethistory"></ol>
+</form>
+    <button name="button" class="getNewTweets">Get New Tweets</button>
     <h2>Tweets For You</h2>
     <script>
-      window.newTweets = function(){
-          var $body = $('body');
-          $body.html();
-          var index = streams.home.length - 1;
-          while(index >= 0){
-            var tweet = streams.home[index];
-            var $tweet = $('<div class="tweet"></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message + ', ' + tweet.created_at.toDateString() + ' ' + tweet.created_at.toLocaleTimeString());
-            $tweet.appendTo($body);
-            index -= 1;
-          }
+      window.getTweets = function(){
+        var $body = $('body');
+        $body.html();
+        var index = streams.home.length - 1;
+        while(index >= 0){
+          var tweet = streams.home[index];
+          var username = tweet.user;
+          var $tweet = $('<div class="tweet"></div>');
+          $tweet.html('@' + username + ': ' + tweet.message + ', ' + tweet.created_at.toDateString() + ' ' + tweet.created_at.toLocaleTimeString());
+          $tweet.data("timestamp",tweet.created_at);
+          $tweet.data("user",username);
+          $tweet.appendTo($body);
+          index -= 1;
         }
+      }
       $(document).ready(function(){
-        newTweets();
-        // to make user name clickable, turn $tweet.text into html, wrap the username in it's own identifier, and build a jquery click function on it
+        getTweets();
+        $("div.tweet").click(function() {
+          var $usertweets = $('<li class="usertweets"></li>');
+          $('.tweethistory').html('');
+          for(var i=0; i < streams.home.length; i++){
+            if(streams.home[i].user == $(this).data('user')){
+              $(".username").html($(this).data('user'));
+              $usertweets.html(streams.home[i].message + ', ' + streams.home[i].created_at);
+              $usertweets.appendTo('.tweethistory');
+              console.log(streams.home[i].message)
+            };
+          }; 
+        });
+      });
 
-        $("button.gettweets").click(function() {
-          $(".tweet").text('');
-          newTweets();
+        $("button.getNewTweets").click(function() {
+          $('.tweet').remove();
+          getTweets();
+          // $.each($('.tweet'), function(index){
+          //   if($('.tweet').data('timestamp') < lastTweetTime){
+          //       $('.tweet').remove();
+          //     }
+          // });
         });
 
-      });
 
     </script>
   </body>
