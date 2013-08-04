@@ -44,8 +44,7 @@
           index -= 1;
         }
       }
-      $(document).ready(function(){
-        getTweets();
+      window.tweetHistory = function(){
         $("div.tweet").click(function() {
           var $usertweets = $('<li class="usertweets"></li>');
           $('.tweethistory').html('');
@@ -58,16 +57,16 @@
             };
           }; 
         });
+      };
+      $(document).ready(function(){
+        getTweets();
+        tweetHistory();
       });
 
         $("button.getNewTweets").click(function() {
           $('.tweet').remove();
           getTweets();
-          // $.each($('.tweet'), function(index){
-          //   if($('.tweet').data('timestamp') < lastTweetTime){
-          //       $('.tweet').remove();
-          //     }
-          // });
+          tweetHistory();
         });
 
 
